@@ -1,17 +1,17 @@
 import React from "react";
-import Footer from "./Footer";
+import { Footer } from "./Footer";
 import { Header } from "./Header";
 
-const MainLayout = ({ children }) => {
+export const MainLayout = ({ children }) => {
   return (
     <div>
+      {/* herder  */}
       <Header />
-
+      {/* main area  */}
       <main className="main">{children}</main>
 
+      {/* footer  */}
       <Footer />
     </div>
   );
 };
-
-export default MainLayout;
