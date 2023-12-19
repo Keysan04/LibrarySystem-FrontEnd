@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { CustomInput } from "../custom-input/CustomInput";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { postNewReviewAction } from "../../pages/book/bookAction";
 
 export const Review = ({ bookId, _id, bookName }) => {
-  const dispatch = useDispatch();
   const [form, setForm] = useState({ rating: 5 });
 
   const handOnChange = (e) => {
@@ -26,9 +23,8 @@ export const Review = ({ bookId, _id, bookName }) => {
 
   const handleonSubmit = (e) => {
     e.preventDefault();
-    const obj = { ...form, bookId, burrowHistoryId: _id, bookName };
+    const obj = { ...form, bookId, _id, bookName };
 
-    dispatch(postNewReviewAction(obj));
     //call api to create new review in the reveiew table
   };
 

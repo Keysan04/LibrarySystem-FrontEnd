@@ -39,12 +39,12 @@ export const BurrowHistoryTable = ({ userId }) => {
         <Review {...selectedBurrow} />
       </CustomModal>
 
-      <p className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between">
         <label htmlFor="">{burrows.lenght} burrow history found!</label>
         <div>
           <Form.Control type="text" placeholder="search book by name" />
         </div>
-      </p>
+      </div>
 
       <Table bordered>
         <thead>
@@ -71,6 +71,7 @@ export const BurrowHistoryTable = ({ userId }) => {
                 isReturned,
                 returnedDate,
                 createdAt,
+                reviewGiven,
               },
               i
             ) => (
@@ -88,14 +89,21 @@ export const BurrowHistoryTable = ({ userId }) => {
                 {userId ? (
                   <td>
                     {isReturned ? (
-                      <Button
-                        onClick={() =>
-                          handleOnReview({ _id, bookId, bookName })
-                        }
-                        variant="warning"
-                      >
-                        Leave Review
-                      </Button>
+                      reviewGiven ? (
+                        <span className="text-success fw-bolder">
+                          {" "}
+                          Review Received
+                        </span>
+                      ) : (
+                        <Button
+                          onClick={() =>
+                            handleOnReview({ _id, bookId, bookName })
+                          }
+                          variant="warning"
+                        >
+                          Leave Review
+                        </Button>
+                      )
                     ) : (
                       <Button onClick={() => handleOnReturn(_id)}>
                         Return Book

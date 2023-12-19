@@ -19,12 +19,13 @@ import {
 import MyBook from "./pages/my-books/MyBook";
 import { useEffect } from "react";
 import NewBook from "./pages/book/NewBook";
-import { getAllBooksAction } from "./pages/book/bookAction";
+import { fetchReviewsAction, getAllBooksAction } from "./pages/book/bookAction";
 import { useDispatch } from "react-redux";
 import UpdateBook from "./pages/book/UpdateBook";
 import BookLanding from "./pages/book/BookLanding";
 import { autoLogin } from "./pages/user_sinup_login/userAction";
 import Admins from "./pages/Admins/Admins";
+import ReviewPage from "./pages/book/ReviewPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function App() {
   useEffect(() => {
     dispatch(getAllBooksAction());
     dispatch(autoLogin());
+    dispatch(fetchReviewsAction());
   }, [dispatch]);
 
   return (
@@ -81,6 +83,14 @@ function App() {
           element={
             <AdminPrivateRouter>
               <UpdateBook />
+            </AdminPrivateRouter>
+          }
+        />
+        <Route
+          path="/reviews"
+          element={
+            <AdminPrivateRouter>
+              <ReviewPage />
             </AdminPrivateRouter>
           }
         />

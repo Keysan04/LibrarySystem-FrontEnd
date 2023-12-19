@@ -3,11 +3,21 @@ import {
   getNewAccessJwt,
   getUser,
   logOutUser,
+  postUser,
 } from "../../helpers/axiosHelper";
 import { setAllUsers, setUser } from "./userSlic";
 
 export const getUserAction = () => async (dispatch) => {
   const { status, message, user } = await getUser();
+
+  if (status === "success") {
+    // send user to the store
+    dispatch(setUser(user));
+  }
+};
+
+export const postNewUserAction = (obj) => async (dispatch) => {
+  const { status, message, user } = await postUser();
 
   if (status === "success") {
     // send user to the store

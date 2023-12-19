@@ -7,6 +7,7 @@ import { Button, ButtonGroup, Col, Container, Row } from "react-bootstrap";
 import { FaStar } from "react-icons/fa6";
 import { FaStarHalfAlt } from "react-icons/fa";
 import { postBurrowActioin } from "../burrow-history/burrowActions";
+import { ReviewStars } from "../../components/revew-stars/ReviewStars";
 
 const BookLanding = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const BookLanding = () => {
   const { _id } = useParams();
   const [showReview, setShowReview] = useState(false);
   // pull the book infor from the state and implente in UI below
-  const { selectedBook } = useSelector((state) => state.bookInfo);
+  const { selectedBook, reviews } = useSelector((state) => state.bookInfo);
   const { user } = useSelector((state) => state.userInfo);
 
   useEffect(() => {
@@ -49,6 +50,15 @@ const BookLanding = () => {
     }
   };
 
+  //TODO: only returen active revies from server.
+  //temp fix: use status to active
+  const bookSpecificReviews = reviews.filter(
+    (review) => review.status === "active" && review.bookId === _id
+  );
+  const avgRating =
+    bookSpecificReviews.reduce((acc, item) => acc + item.rating, 0) /
+    bookSpecificReviews.length;
+
   return (
     <MainLayout>
       <Container>
@@ -69,13 +79,7 @@ const BookLanding = () => {
             {/* <div>Author:{author}</div>
             <div>Publish Year: {publishYear}</div> */}
 
-            <p className="mb-5">
-              <FaStar className="text-warning" />
-              <FaStar className="text-warning" />
-              <FaStar className="text-warning" />
-              <FaStar className="text-warning" />
-              <FaStarHalfAlt className="text-warning" />
-            </p>
+            <ReviewStars avgRating={avgRating} />
 
             <p className="pt-5">Summary: {description?.slice(0, 120)}... </p>
             <p className="d-grid pt-2">
@@ -120,75 +124,20 @@ const BookLanding = () => {
 
             {showReview ? (
               <>
-                <div className="d-flex gap-3 shadow mb-4">
-                  <div className="avatar">PA</div>
-                  <div className="review">
-                    <h4>Best Book ever</h4>
-                    <p className="mb-3">
-                      <span>
-                        <FaStar className="text-warning" />
-                        <FaStar className="text-warning" />
-                        <FaStar className="text-warning" />
-                        <FaStar className="text-warning" />
-                        <FaStarHalfAlt className="text-warning" />
-                      </span>{" "}
-                      <small>5 days ago.</small>
-                    </p>
+                {bookSpecificReviews.map((review) => (
+                  <div className="d-flex gap-3 shadow mb-4">
+                    <div className="avatar">PA</div>
+                    <div className="review">
+                      <h4>{review.title}</h4>
+                      <div className="mb-3">
+                        <ReviewStars avgRating={review.rating} />
+                        <small>5 days ago.</small>
+                      </div>
 
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Consequuntur consectetur rerum hic aut alias animi error,
-                      doloribus odit nam libero neque qui ipsa molestiae est
-                      optio reprehenderit quasi necessitatibus delectus.
-                    </p>
+                      <p>{review.message} </p>
+                    </div>
                   </div>
-                </div>
-                <div className="d-flex gap-3 shadow mb-4">
-                  <div className="avatar">PA</div>
-                  <div className="review ">
-                    <h4>Best Book ever</h4>
-                    <p className="mb-3">
-                      <span>
-                        <FaStar className="text-warning" />
-                        <FaStar className="text-warning" />
-                        <FaStar className="text-warning" />
-                        <FaStar className="text-warning" />
-                        <FaStarHalfAlt className="text-warning" />
-                      </span>{" "}
-                      <small>5 days ago.</small>
-                    </p>
-
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Consequuntur consectetur rerum hic aut alias animi error,
-                      doloribus odit nam libero neque qui ipsa molestiae est
-                      optio reprehenderit quasi necessitatibus delectus.
-                    </p>
-                  </div>
-                </div>
-                <div className="d-flex gap-3 shadow mb-4">
-                  <div className="avatar">PA</div>
-                  <div className="review">
-                    <h4>Best Book ever</h4>
-                    <p className="mb-3">
-                      <span>
-                        <FaStar className="text-warning" />
-                        <FaStar className="text-warning" />
-                        <FaStar className="text-warning" />
-                        <FaStar className="text-warning" />
-                        <FaStarHalfAlt className="text-warning" />
-                      </span>{" "}
-                      <small>5 days ago.</small>
-                    </p>
-
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Consequuntur consectetur rerum hic aut alias animi error,
-                      doloribus odit nam libero neque qui ipsa molestiae est
-                      optio reprehenderit quasi necessitatibus delectus.
-                    </p>
-                  </div>
-                </div>
+                ))}
               </>
             ) : (
               description
