@@ -26,7 +26,6 @@ export const Header = () => {
                 <Link className="nav-link" to="/">
                   <FaHome /> Home
                 </Link>
-
                 <Link className="nav-link " to="/dashboard">
                   <MdDashboard /> Dashboard
                 </Link>

@@ -3,9 +3,9 @@ import {
   getNewAccessJwt,
   getUser,
   logOutUser,
-  postUser,
 } from "../../helpers/axiosHelper";
-import { setAllUsers, setUser } from "./userSlic";
+import { setUser } from "./userSlic";
+import { getPeople } from "./userSlic";
 
 export const getUserAction = () => async (dispatch) => {
   const { status, message, user } = await getUser();
@@ -15,22 +15,11 @@ export const getUserAction = () => async (dispatch) => {
     dispatch(setUser(user));
   }
 };
+export const getUsersAction = () => async (dispatch) => {
+  const resp = await getAllUsers();
 
-export const postNewUserAction = (obj) => async (dispatch) => {
-  const { status, message, user } = await postUser();
-
-  if (status === "success") {
-    // send user to the store
-    dispatch(setUser(user));
-  }
-};
-
-export const getAllUsersAction = () => async (dispatch) => {
-  const { status, message, users } = await getAllUsers();
-
-  if (status === "success") {
-    // send user to the store
-    dispatch(setAllUsers(users));
+  if (resp.status === "success") {
+    dispatch(getPeople(resp.data));
   }
 };
 

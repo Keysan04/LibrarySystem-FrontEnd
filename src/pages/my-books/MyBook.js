@@ -1,23 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { UserLayout } from "../../components/layout/UserLayout";
-import { BurrowHistoryTable } from "../../components/burrow-history/BurrowHistoryTable";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchBurrowsActioin } from "../burrow-history/burrowActions";
+import { useSelector } from "react-redux";
 
 const MyBook = () => {
-  const { user } = useSelector((state) => state.userInfo);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    user?.role === "admin" && dispatch(fetchBurrowsActioin());
-  }, [user?.role, dispatch]);
-
-  return (
-    <UserLayout title={"My Books burrow history"}>
-      <BurrowHistoryTable userId={user._id} />
-    </UserLayout>
-  );
+  return <UserLayout title={"My Books burrow history"}>MyBook</UserLayout>;
 };
 
 export default MyBook;

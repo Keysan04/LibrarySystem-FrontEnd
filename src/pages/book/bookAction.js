@@ -1,17 +1,11 @@
 import { toast } from "react-toastify";
 import {
   deleteBook,
-  deleteReview,
-  fetchReviews,
   getBooks,
   postBook,
-  postReview,
   updateBook,
-  updateReview,
 } from "../../helpers/axiosHelper";
-import { setABook, setBooks, setReviews } from "./bookSlice";
-import { setShowModal } from "../../system-state/systemSlice";
-import { fetchBurrowsActioin } from "../burrow-history/burrowActions";
+import { setABook, setBooks } from "./bookSlice";
 
 export const getAllBooksAction = () => async (dispatch) => {
   const { status, message, books } = await getBooks();
@@ -68,62 +62,5 @@ export const deleteBookAction = (_id) => async (dispatch) => {
     // call the fuction that fatches all the books and updates the store
     dispatch(getAllBooksAction());
     return true;
-  }
-};
-
-// ========= review actions
-export const postNewReviewAction = (reviewObj) => async (dispatch) => {
-  const pending = postReview(reviewObj);
-
-  toast.promise(pending, {
-    pending: "Please wait...",
-  });
-
-  const { status, message } = await pending;
-  toast[status](message);
-
-  if (status === "success") {
-    dispatch(setShowModal(false));
-
-    //refetch all burrows
-    dispatch(fetchBurrowsActioin());
-    // call the fuction that fatches all the reviews and updates the store
-    // dispatch(getAllReviewsAction());
-  }
-};
-export const updateReviewAction = (reviewObj) => async (dispatch) => {
-  const pending = updateReview(reviewObj);
-
-  toast.promise(pending, {
-    pending: "Please wait...",
-  });
-
-  const { status, message } = await pending;
-  toast[status](message);
-
-  if (status === "success") {
-    dispatch(fetchReviewsAction());
-  }
-};
-export const deleteReviewAction = (_id) => async (dispatch) => {
-  const pending = deleteReview(_id);
-
-  toast.promise(pending, {
-    pending: "Please wait...",
-  });
-
-  const { status, message } = await pending;
-  toast[status](message);
-
-  if (status === "success") {
-    dispatch(fetchReviewsAction());
-  }
-};
-
-export const fetchReviewsAction = () => async (dispatch) => {
-  const { status, message, reviews } = await fetchReviews();
-
-  if (status === "success") {
-    dispatch(setReviews(reviews));
   }
 };

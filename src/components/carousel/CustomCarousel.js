@@ -1,11 +1,10 @@
 import Carousel from "react-bootstrap/Carousel";
-import a from "../../assets/a.jpg";
-import b from "../../assets/b.jpg";
-import c from "../../assets/c.jpg";
-
+import a from "../../assets/lib1.jpg";
+import b from "../../assets/lib2.avif";
+import c from "../../assets/lib3.avif";
 export const CustomCarousel = () => {
   return (
-    <Carousel data-bs-theme="">
+    <Carousel data-bs-theme="dark">
       <Carousel.Item>
         <img className="d-block w-100" src={a} alt="First slide" />
         <Carousel.Caption>

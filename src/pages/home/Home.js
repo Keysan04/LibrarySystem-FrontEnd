@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MainLayout } from "../../components/layout/MainLayout";
 import { CustomCarousel } from "../../components/carousel/CustomCarousel";
-import { Alert, Col, Container, Form, Row } from "react-bootstrap";
+import { Row, Col, Container, Form, Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { CustomCard } from "../../components/custom-card/CustomCard";
 import { Link } from "react-router-dom";
@@ -19,46 +19,47 @@ const Home = () => {
   const handleOnSearch = (e) => {
     const { value } = e.target;
     const str = value.toLowerCase();
-
-    const searchedbook = books.filter(
+    const searchedBook = books.filter(
       (book) =>
-        book.status === "active" && book.name.toLowerCase().includes(str)
+        books.status === "active" && book.name.toLowerCase().includes(str)
     );
-
-    console.log(searchedbook);
-    setFilteredBook(searchedbook);
+    setFilteredBook(searchedBook);
   };
 
   return (
     <MainLayout>
       <div>
+        {/* carousel */}
         <CustomCarousel />
 
-        {/* book list cart */}
-
+        {/* booklist cart */}
         <Container className="mt-5" fluid>
           <Row>
             <Col className="d-flex justify-content-between">
-              <label htmlFor="">{filteredBook.length} Books found!</label>
+              <label htmlFor="">{filteredBook.length} books found</label>
+
               <div>
                 <Form.Control
                   onChange={handleOnSearch}
-                  placeholder="Search book by name..."
+                  placeholder="Search book by name.."
                 />
               </div>
+              <hr />
             </Col>
           </Row>
-          <hr />
           <Row>
-            <Col className="d-flex justify-content-center  flex-wrap mt-5 gap-3">
-              {filteredBook.map((book, i) => (
-                <Link key={book._id} to={`/book/${book._id}`}>
-                  <CustomCard {...book} />
-                </Link>
-              ))}
-
+            <Col className="d-flex justify-content-center flex-wrap mt-5 gap-3">
+              {filteredBook.map(
+                (book, i) =>
+                  // <Link key = {book._id} to = {`/book`}/>
+                  book.status === "active" && (
+                    <Link to={`/book/${book._id}`} key={i}>
+                      <CustomCard {...book} />
+                    </Link>
+                  )
+              )}
               {filteredBook.length < 1 && (
-                <Alert variant="warning">No book found</Alert>
+                <Alert variant="warning">No Book Found</Alert>
               )}
             </Col>
           </Row>

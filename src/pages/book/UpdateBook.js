@@ -15,9 +15,11 @@ import {
 const UpdateBook = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   // grab the _id from url
   const { _id } = useParams();
   const [form, setForm] = useState({});
+  //alert(form._id);
 
   // get the selectdBook frm state and populate in the form
   const { selectedBook } = useSelector((state) => state.bookInfo);
@@ -37,8 +39,7 @@ const UpdateBook = () => {
       return;
     }
 
-    const { __v, updatedAt, isAvailable, isbn, createdAt, dueDate, ...rest } =
-      form;
+    const { __v, updatedAt, isbn, createdAt, ...rest } = form;
     dispatch(updateBookAction(rest));
     console.log(form);
   };

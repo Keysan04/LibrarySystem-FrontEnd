@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 export const BookTable = () => {
   const { books } = useSelector((state) => state.bookInfo);
+  console.log(books[0]._id);
   return (
     <div className="">
       <p className="d-flex justify-content-between">

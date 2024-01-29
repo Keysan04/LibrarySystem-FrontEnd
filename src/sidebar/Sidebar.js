@@ -6,7 +6,6 @@ import { PiStudentBold } from "react-icons/pi";
 import { FaHistory } from "react-icons/fa";
 import { FaUserCog } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { FaStar } from "react-icons/fa";
 
 export const Sidebar = () => {
   const { user } = useSelector((state) => state.userInfo);
@@ -37,14 +36,6 @@ export const Sidebar = () => {
               <li>
                 <Link
                   className="nav-link d-flex align-items-center gap-2"
-                  to="/reviews"
-                >
-                  <FaStar /> Reviews
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="nav-link d-flex align-items-center gap-2"
                   to="/students"
                 >
                   <PiStudentBold /> Students
@@ -53,18 +44,9 @@ export const Sidebar = () => {
               <li>
                 <Link
                   className="nav-link d-flex align-items-center gap-2"
-                  to="/all-admins"
-                >
-                  <PiStudentBold /> All Admins
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="nav-link d-flex align-items-center gap-2"
                   to="/burrow-history"
                 >
-                  <FaHistory />
-                  All Burrow History
+                  <FaHistory /> Burrow History
                 </Link>
               </li>
             </>

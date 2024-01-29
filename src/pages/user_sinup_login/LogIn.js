@@ -15,10 +15,12 @@ const LogIn = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  console.log(location);
   const { user } = useSelector((state) => state.userInfo);
 
   const fromLocation =
     location?.state?.from?.location?.pathname || "/dashboard";
+  console.log(fromLocation);
   useEffect(() => {
     // redirect to  dashboard
     user?._id && navigate(fromLocation);
@@ -28,7 +30,7 @@ const LogIn = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-
+    debugger;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
